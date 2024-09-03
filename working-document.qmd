@@ -1,0 +1,42 @@
+---
+title: "Big Data, Big Change: Innovating Indonesia's Fuel Strategy with Real-Time Analytics"
+author: "Ega Kurnia Yazid"
+format: pdf
+editor: visual
+---
+
+## Abstract
+
+Indonesia's reliance on fossil fuel subsidies presents significant fiscal challenges and environmental concerns, necessitating a more precise understanding of fuel consumption patterns. This study employs Mixed Data Sampling (MIDAS) models to nowcast fuel energy consumption by integrating high-frequency mobility data from platforms such as Google and Facebook with monthly market data, including the Purchasing Managers Index (PMI). The ability to nowcast fuel consumption is crucial for Indonesia, as it provides timely insights into energy demand trends, thereby informing the strategic phase-out of fossil fuel subsidies. Additionally, this approach serves as an early warning system for potential economic slowdowns, allowing policymakers to implement timely interventions to mitigate risks. Our findings underscore the potential of combining big data analytics with traditional economic indicators to enhance evidence-based policymaking. As Indonesia transitions towards sustainable energy, this research highlights the importance of innovative data integration techniques to support economic stability and environmental sustainability. These insights are particularly valuable for ASEAN countries seeking to balance economic development with the urgent need to address climate change.
+
+**Keywords**: Fossil Fuel Consumption, Nowcasting, Subsidy Reform, Mixed Data Sampling (MIDAS), Big Data
+
+\pagebreak
+
+## 1. Introduction
+
+-   The landscape of fuel subsidy setting in Indonesia
+
+-   The problems in existing subsidy energy mechanisms
+
+    -   Commodity
+
+    -   High compensation relies on the geopolitical and global market situations
+
+-   energy tarriff adjustments are required to lighten the burden but also to maintain the stability of domestic energy price
+
+## 2. Nowcasting Country's Energy Consumption
+
+-   Nowcasting is a common practice a country does to exploit the high-frequency (daily or monthly) indicators to produce the key macro-indicators that are generated in lower frequency (quarterly or annually)
+
+-   Experience in other countries in nowcasting their energy (and the byproducts)
+
+-   The usage of nowcasting in the national policymaking
+
+## 3. Methods
+
+-   MIDAS vs Machine Learning vs VAR
+
+## 4. Results and Discussion
+
+## 5. Conclusion

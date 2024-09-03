@@ -1,0 +1,70 @@
+---
+title: "nowcast-analysis"
+author: "Ega Kurnia Yazid"
+format: html
+editor: visual
+---
+
+## Import Libraries and Dataset
+
+```{r installing-packages}
+#install.packages("dplyr")
+#install.packages("tidyr")
+#install.packages("midasr")
+#install.packages("ggplot2")
+#install.packages("sandwich")
+#install.packages("quantreg")
+#install.packages("SparseM")
+#install.packages("httr")
+#install.packages("jsonlite")
+#install.packages("glue")
+#renv::snapshot()
+```
+
+```{r importing-libraries}
+library(midasr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(glue)
+```
+
+```{r importing-dataset-api}
+#apikey <- Sys.getenv("APIKEY")
+#ceic_html <- "https://api.ceicdata.com/v2/insights/series/cfca6d08-c231-497b-8aa2-b8fc370a0763,b3b0bb75-1058-4527-b8e6-5ea05595cb10,ba5be73a-0dab-4b15-be88-4805ebb739fe?lang=en&format=json&token="
+
+# Connect to API
+#idxenergy <- httr::GET(paste(ceic_html, apikey, sep=""))
+
+# Check Status
+#str(idxenergy)
+
+# Content to JSON
+#energycontent <- httr::content(idxenergy, as="text")
+
+# JSON to Table
+#energyJSON <- jsonlite::fromJSON(energycontent)
+
+# View JSON
+```
+
+```{r importing-dataset-local}
+
+# Import stock-market data
+stockmarket <- read.csv("dataset/stock-market.csv")
+monetary <- read.csv("dataset/monetary-dataset.csv", sep = ";") # might drop rgdp and unemployment
+fuel <- read.csv("dataset/fuel-consumption.csv", sep=";")
+
+# Filter data when idxenergy & idxtrans get started consistently
+data <- data.frame(stockmarket) %>% 
+  slice_tail(n=826)
+
+# Renaming Columns
+colnames(data) <- c("date", "idxenergy", "idxtrans", "jkse")
+```
+
+```{r merge-dataset}
+
+```
+
+## Descriptive Statistics
