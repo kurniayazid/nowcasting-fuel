@@ -4,5 +4,6 @@
 .Ruserdata
 .Renviron
 dataset/
+renv/
 working-document.pdf
 working-document.qmd

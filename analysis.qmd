@@ -3,11 +3,16 @@ title: "nowcast-analysis"
 author: "Ega Kurnia Yazid"
 format: html
 editor: visual
+execute: 
+  echo: false
 ---
 
-## Import Libraries and Dataset
+## A. Import Libraries and Dataset
+
+### 0. Installing Packages (if have not)
 
 ```{r installing-packages}
+#install.packages("tidyverse")
 #install.packages("dplyr")
 #install.packages("tidyr")
 #install.packages("midasr")
@@ -17,17 +22,22 @@ editor: visual
 #install.packages("SparseM")
 #install.packages("httr")
 #install.packages("jsonlite")
-#install.packages("glue")
-#renv::snapshot()
+#install.packages("modelsummary")
+#install.packages("markdown")
+#renv::snapshot() # Freeze requirements
 ```
 
+### 1. Importing Libraries
+
 ```{r importing-libraries}
+library(tidyverse)
 library(midasr)
-library(dplyr)
-library(tidyr)
 library(ggplot2)
-library(glue)
+library(modelsummary)
+library(markdown)
 ```
+
+### 2. Importing Dataset
 
 ```{r importing-dataset-api}
 #apikey <- Sys.getenv("APIKEY")
@@ -51,20 +61,63 @@ library(glue)
 ```{r importing-dataset-local}
 
 # Import stock-market data
-stockmarket <- read.csv("dataset/stock-market.csv")
-monetary <- read.csv("dataset/monetary-dataset.csv", sep = ";") # might drop rgdp and unemployment
-fuel <- read.csv("dataset/fuel-consumption.csv", sep=";")
+stockmarket   <- read.csv("dataset/stock-market.csv")
+monetary      <- read.csv("dataset/monetary-dataset.csv", sep = ";") 
+                # might drop rgdp and unemployment
+
+# Import national mobility data
+
+# Import fuel consumption data
+fuel          <- read.csv("dataset/fuel-consumption.csv", sep=";")
 
 # Filter data when idxenergy & idxtrans get started consistently
-data <- data.frame(stockmarket) %>% 
+stockdata <- data.frame(stockmarket) %>% 
   slice_tail(n=826)
 
 # Renaming Columns
-colnames(data) <- c("date", "idxenergy", "idxtrans", "jkse")
+colnames(stockdata) <- c("date", "idxenergy", "idxtrans", "jkse")
 ```
+
+### 3. Raw Dataset Formatting
+
+```{r date-formatting}
+# Date Formatting
+stockdata$date     <- as.Date(stockdata$date, format = "%m/%d/%Y")
+
+monetary$date <- paste0(monetary$date, "/01") %>% 
+  as.Date(monetary$date, format = "%m/%Y/%d") %>% 
+  format("%m/%d/%Y") %>% 
+  as.Date(monetary$date, format = "%m/%d/%Y")
+
+fuel$date     <- paste0(fuel$date, "-01") %>% 
+  as.Date(fuel$date, format="%b-%y-%d") %>% 
+  format("%m/%d/%Y") %>%
+  as.Date(fuel$date, format = "%m/%d/%Y")
+```
+
+### 4. Merge Datasets
 
 ```{r merge-dataset}
-
+# Merge all Data
+data <- stockdata %>% 
+  left_join(monetary, by="date") %>% 
+  left_join(fuel, by="date")
 ```
 
-## Descriptive Statistics
+## B. Descriptive Statistics
+
+```{r}
+# Data Summary
+summary(data)
+```
+
+```{r correlation-stats}
+datasummary_correlation(data)
+```
+
+## C. Nowcasting
+
+```{r}
+set.seed(2024)
+fit <- midas_r(data$RON8890 ~ mls(data$idxtrans, 0:29, 30), start=NULL)
+```
